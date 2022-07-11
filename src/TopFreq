@@ -1,0 +1,26 @@
+package com.mapsahr;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public class TopFreq {
+    public static void main(String[] args) {
+        String str="salammmm";
+        IntStream
+                .range(0,str.length())
+                // only look for letters.
+                .filter(i->Character.isLetter(str.charAt(i)))
+                .boxed()
+                // stream the Integers from 0 to length
+                // and group them by character in a list of indices.
+                .collect(Collectors.groupingBy(i->str.charAt(i)+""))
+                .entrySet()
+                .stream()
+                // sorted by Alphabet
+                .sorted(Map.Entry.comparingByKey())
+                // sorted by frequent
+                .sorted((e1, e2) -> e2.getValue().size() - e1.getValue().size())
+                // print sorted by frequent & alphabet
+                .forEach(e-> System.out.print(e.getKey().repeat(e.getValue().size())) );
+    }
+}
